@@ -1,10 +1,18 @@
 <h1>画像投稿フォーム</h1>
-  <%= form_with model: @book do |f| %>
-    <h4>画像</h4>
-      <%= f.file_field :image, accept: "image/*" %>
-    <h4>Title</h4>
-      <%= f.text_field :title %>
-    <h4>Opinion</h4>
-      <%= f.text_area :body %>
-    <%= f.submit 'Create ' %>
-  <% end %>
+<% if @book.errors.any? %>
+  <%= pluralize(@book.errors.count, "error") %> prohibited this obj from being saved:
+  <ul>
+    <% @book.errors.full_messages.each do |messege| %>
+      <li><%= messege %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+<%= form_with model: @book do |f| %>
+  <h4>Title</h4>
+    <%= f.text_field :title %>
+  <h4>Opinion</h4>
+    <%= f.text_area :body %>
+  <%= f.submit 'Create' %>
+<% end %>
