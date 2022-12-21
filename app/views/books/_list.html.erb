@@ -1,10 +1,51 @@
-<% books.each do |book| %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <% books.each do |book| %>
+      <h2>User info</h2>
+      <%= image_tag book.user.get_profile_image(100,100) %></p>
+      <table class="table">
+        <tr>
+          <td><b>name</b></td>
+          <td><b><%= book.user.name %></b></td>
+        </tr>
+        <tr>
+          <td><b>introduction</b></td>
+          <td><b></b></td>
+        </tr>
+      </table>
+      <div class="row">
+        <% if user == current_user %>
+          <p><%= link_to "編集", edit_user_path(user), class: "btn btn-light" %></p>
+        <% end %>
+      </div>
+
+      <h1>New book</h1>
+      <% if book.errors.any? %>
+        <%= pluralize(book.errors.count, "error") %> prohibited this obj from being saved:
+        <ul>
+          <% book.errors.full_messages.each do |messege| %>
+            <li><%= messege %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <%= form_with model: book do |f| %>
+        <h4>Title</h4>
+        <%= f.text_field :title %>
+        <h4>Opinion</h4>
+        <%= f.text_area :body %><br>
+        <%= f.submit 'Create Book' %>
+      <% end %>
+
+    </div>
+
 <div>
-  <p>投稿ユーザー画像：<%= image_tag book.user.get_profile_image(100,100) %></p>
-  <p>Title:</p>
   <%= link_to book_path(book.id) do %>
     <p><%= book.title %></p>
   <% end %>
   <p>Opinion:<%= book.body %></p>
 </div>
-<% end %>
+  <% end %>
+  </div>
+</div>
