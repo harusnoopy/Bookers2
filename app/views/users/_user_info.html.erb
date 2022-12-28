@@ -1,0 +1,36 @@
+<div class="col-md-3">
+  <h2>User info</h2>
+  <%= image_tag user.get_profile_image(100,100) %>
+  <table class="table">
+    <tr>
+      <td><b>name</b></td>
+      <td><b><%= user.name %></b></td>
+    </tr>
+    <tr>
+      <td><b>introduction</b></td>
+      <td><b><%= user.introduction %></b></td>
+    </tr>
+  </table>
+  <div class="row">
+    <% if user == current_user %>
+      <%= link_to "編集", edit_user_path(user), class: "btn btn-outline-secondary btn-block" %>
+    <% end %>
+  </div>
+
+  <h2>New book</h2>
+  <% if book.errors.any? %>
+   <%= pluralize(book.errors.count, "error") %> prohibited this obj from being saved:
+    <ul>
+      <% book.errors.full_messages.each do |messege| %>
+        <li><%= messege %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <%= form_with model: book do |f| %>
+    <label for="book_title">Title</label><br>
+    <%= f.text_field :title %><br>
+    <label for="book_opinion">Opinion</label><br>
+    <%= f.text_area :body %><br>
+    <%= f.submit 'Create Book', class: "btn btn-success" %>
+  <% end %>
+</div>
