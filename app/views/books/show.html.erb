@@ -1,49 +1,21 @@
-<div class="container px-5">
+<p id="notice">
+  <%= notice %>
+</p>
+
+<div class="container">
   <div class="row">
-    <div class="col-md-3">
 
-      <h2>User info</h2>
-      <%= image_tag @book.user.get_profile_image(100,100) %>
-      <table class="table">
-        <tr>
-          <td><b>name</b></td>
-          <td><b><%= @book.user.name %></b></td>
-        </tr>
-        <tr>
-          <td><b>introduction</b></td>
-          <td><b><%= @book.user.introduction %></b></td>
-        </tr>
-      </table>
-      <div class="row">
-        <% if @book.user == current_user %>
-          <%= link_to "編集", edit_user_path(@book.user), class: "btn btn-outline-secondary btn-block" %>
-        <% end %>
-      </div>
+    <%= render 'users/user_info', book: @book, user: @user %>
 
-      <h1>New book</h1>
-      <% if @book.errors.any? %>
-        <%= pluralize(@book.errors.count, "error") %> prohibited this obj from being saved:
-        <ul>
-          <% @book.errors.full_messages.each do |messege| %>
-            <li><%= messege %></li>
-          <% end %>
-        </ul>
-      <% end %>
-      <%= form_with model: @book do |f| %>
-        <h4>Title</h4>
-        <%= f.text_field :title %>
-        <h4>Opinion</h4>
-        <%= f.text_area :body %><br>
-        <%= f.submit 'Create Book', class: "btn btn-success" %>
-      <% end %>
-    </div>
-    
     <div class="col-md-8 offset-md-1">
       <h2>Book detail</h2>
       <table class="table">
         <tr>
           <td>
-            <%= image_tag @book.user.get_profile_image(80,80) %>
+            <%= image_tag @book.user.get_profile_image(80,80) %><br>
+            <%= link_to user_path(@book.user_id) do %>
+              <p><%= @book.user.name %></p>
+            <% end %>
           </td>
           <td>
             <%= link_to book_path(@book.id) do %>
@@ -51,6 +23,16 @@
             <% end %>
           </td>
           <td><%= @book.body %></td>
+          <td>
+            <% if @book.user == current_user %>
+              <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success" %>
+            <% end %>
+          </td>
+          <td>
+            <% if @book.user == current_user %>
+              <%= link_to "Destroy", book_path(@book), method: :delete, class: "btn btn-danger", "data-confirm" => "Are you sure?" %>
+            <% end %>
+          </td>
         </tr>
       </table>
     </div>
