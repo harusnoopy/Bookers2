@@ -16,18 +16,15 @@
       <%= link_to(edit_user_path(user), class: "btn btn-outline-secondary btn-block") do %>
         <i class="fas fa-user-cog"></i>
       <% end %>
+    <% else %>
+      <%= link_to(user_path(current_user), class: "btn btn-outline-secondary btn-block") do %>
+        <i class="fas fa-user-cog"></i>
+      <% end %>
     <% end %>
   </div>
 
   <h2>New book</h2>
-  <% if book.errors.any? %>
-   <%= pluralize(book.errors.count, "error") %> prohibited this obj from being saved:
-    <ul>
-      <% book.errors.full_messages.each do |messege| %>
-        <li><%= messege %></li>
-      <% end %>
-    </ul>
-  <% end %>
+  
   <%= form_with model: Book.new do |f| %>
     <div class="form-group">
       <label for="book_title">Title</label><br>
