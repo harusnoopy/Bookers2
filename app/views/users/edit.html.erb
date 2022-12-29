@@ -14,15 +14,15 @@
 
       <%= form_with model: @user do |f| %>
         <div class="form-group">
-          <label for="user_nane">Name</label>
+          <label for="user_nane">Name</label><br>
           <%= f.text_field :name %>
         </div>
         <div class="form-group">
-          <label for="user_image">Image</label>
+          <label for="user_image">Image</label><br>
           <%= f.file_field :profile_image, accept: "image/*" %>
         </div>
         <div>
-          <label for="user_introduction">Introduction</label>
+          <label for="user_introduction">Introduction</label><br>
           <%= f.text_area :introduction %>
         </div>
 
